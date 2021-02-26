@@ -19,7 +19,7 @@ def move_rover(rover, x, y):
     
     dist_tolerance = 1e-3
     # Move the rover to its destination
-    while abs(rover.x - x) > dist_tolerance and abs(rover.y - y) < dist_tolerance:
+    while abs(rover.x - x) > dist_tolerance and abs(rover.y - y) > dist_tolerance:
         rover.send_command(1, 0)
     
     rover.send_command(0, 0)
