@@ -2,7 +2,12 @@ from math import atan2, radians
 
 def move_rover(rover, x, y):
     """
-    Moves a rover from its current location to a point (x, y)
+    Moves a rover from its current location to a specified destination
+
+    Parameters
+    - rover: the Gazebo rover
+    - x: the desired x coordinate
+    - y: the desired y coordinate
     """
     angle_to_travel = atan2(y - rover.y, x - rover.x)
     angle_tolerance = 1e-2
@@ -18,5 +23,3 @@ def move_rover(rover, x, y):
         rover.send_command(1, 0)
     
     rover.send_command(0, 0)
-
-help(move_rover)
