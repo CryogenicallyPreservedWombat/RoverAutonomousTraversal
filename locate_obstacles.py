@@ -19,11 +19,11 @@ def locate_obstacles(rover, sweep_angle=pi/2):
 
         if not isinf(distance):
             # The angle of the lidar sensor with respect to the rover
-            lidar_angle = sweep_angle * (0.5 - i/(num_lidar_sensors - 1))
-            obstalce_heading = radians(rover.heading) + lidar_angle
+            lidar_angle = sweep_angle * (-0.5 + i/(num_lidar_sensors - 1))
+            obstacle_heading = radians(rover.heading) + lidar_angle
 
-            obstacle_x = rover.x + distance * cos(obstalce_heading)
-            obstacle_y = rover.y + distance * sin(obstalce_heading)
+            obstacle_x = rover.x + distance * cos(obstacle_heading)
+            obstacle_y = rover.y + distance * sin(obstacle_heading)
 
             obstacles.append((obstacle_x, obstacle_y))
 
