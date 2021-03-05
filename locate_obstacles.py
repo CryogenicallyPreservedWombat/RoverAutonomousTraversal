@@ -22,8 +22,8 @@ def locate_obstacles(rover, sweep_angle=pi/2):
             lidar_angle = sweep_angle * (-0.5 + i/(num_lidar_sensors - 1))
             obstalce_heading = rover.heading + lidar_angle
 
-            obstacle_x = rover.x + distance * sin(obstalce_heading)
-            obstacle_y = rover.x + distance * sin(obstalce_heading)
+            obstacle_x = rover.x + distance * cos(obstalce_heading)
+            obstacle_y = rover.y + distance * sin(obstalce_heading)
 
             obstacles.append((obstacle_x, obstacle_y))
 
