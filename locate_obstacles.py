@@ -1,4 +1,4 @@
-from math import isfinite, pi, sin, cos
+from math import isinf, pi, sin, cos
 
 def locate_obstacles(rover, sweep_angle=pi/2):
     """
@@ -17,7 +17,7 @@ def locate_obstacles(rover, sweep_angle=pi/2):
 
         distance = rover.laser_distances[i]
 
-        if isfinite(distance):
+        if not isinf(distance):
             # The angle of the lidar sensor with respect to the rover
             lidar_angle = sweep_angle * (-0.5 + i/(num_lidar_sensors - 1))
             obstalce_heading = rover.heading + lidar_angle
