@@ -27,9 +27,10 @@ def locate_obstacles(rover, sweep_angle=pi/2, verbose=False):
             obstacle_y = rover.y + distance * sin(obstacle_heading)
 
             if verbose:
-                print("LiDAR beam (starting at 1): {}".format(i + 1))
-                print("LiDAR angle {}".format(lidar_angle))
-                print("Obstacle heading {}".format(obstacle_heading))
+                print("LiDAR beam (counting from 1): {}".format(i + 1))
+                print("LiDAR angle: {}".format(lidar_angle))
+                print("Obstacle heading: {}".format(obstacle_heading))
+                print("Distance: {}".format(distance))
 
             obstacles.append((obstacle_x, obstacle_y))
 
