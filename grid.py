@@ -25,8 +25,8 @@ class Grid:
         self.end = end
 
         pre_array = []
-        num_x_boxes = ceil(abs((end[0] - start[0]) / side_length))
-        num_y_boxes = ceil(abs((end[1] - start[1]) / side_length))
+        num_x_boxes = int(ceil(abs((end[0] - start[0]) / side_length)))
+        num_y_boxes = int(ceil(abs((end[1] - start[1]) / side_length)))
 
         for i in range(num_x_boxes):
             for j in range(num_y_boxes):
