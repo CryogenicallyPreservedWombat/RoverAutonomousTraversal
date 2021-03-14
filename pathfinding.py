@@ -43,7 +43,7 @@ def quickest_path(node1, node2, grid, include_diagonals=True, euclidean=True):
         closed_set.append(current_node)
     
     # Recover path from grid
-    node = grid[node2.coords]
+    node = node2
     path = []
 
     while len(node.parents) > 0:
