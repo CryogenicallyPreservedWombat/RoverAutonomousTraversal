@@ -18,7 +18,7 @@ def quickest_path(node1, node2, grid, include_diagonals=True, euclidean=True):
         current_node = open_set.pop(index)
 
         if current_node is node2:
-            return 
+            break 
 
         for node in neighbouring_nodes(current_node, grid, include_diagonals=include_diagonals):
 
@@ -41,4 +41,14 @@ def quickest_path(node1, node2, grid, include_diagonals=True, euclidean=True):
             node.parents = [current_node]
 
         closed_set.append(current_node)
+    
+    # Recover path from grid
+    node = grid[node2.coords]
+    path = []
 
+    while len(node.parents) > 0:
+        path.append(node)
+        node = node.parents[0]
+    
+    assert node is grid[0][0], "Viable path was not found"
+    return list(reversed(path))
