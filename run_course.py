@@ -35,8 +35,8 @@ def run_course(rover, end_point, include_diagonals=True, euclidean=True):
             # might want to create an entirely new grid based on the current rover's position
             current_node = (rover.x, rover.y)
             path = quickest_path(current_node, end_node, grid, include_diagonals=include_diagonals, euclidean=euclidean)
-            next_node = path.pop(0)
-            next_location = grid.location(next_node.row, next_node.column)
-        
+
+        next_node = path.pop(0)
+        next_location = grid.location(next_node.row, next_node.column)        
         move_rover(rover, next_location[0], next_location[1])
 
