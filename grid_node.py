@@ -8,7 +8,7 @@ class GridNode:
         self.parents = []
 
     def __repr__(self):
-        return "•" if self.is_obstacle else "o"
+        return "x" if self.is_obstacle else "o"
 
 def neighbouring_nodes(node, grid, include_diagonals=True):
 
