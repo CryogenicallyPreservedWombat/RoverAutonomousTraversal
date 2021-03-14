@@ -51,8 +51,8 @@ class Grid:
     def nearest_node(self, point):
         # Unnecessary float casts are for backwards compatibility to Python 2.7
         # Finds the element of the Grid that is nearest to a specified point
-        i = round(self.height * float(point[1] - self.start[1]) / (self.end[1] - self.start[1]))
-        j = round(self.width * float(point[0] - self.start[0]) / (self.end[0] - self.start[0]))
+        i = int(round(self.height * float(point[1] - self.start[1]) / (self.end[1] - self.start[1])))
+        j = int(round(self.width * float(point[0] - self.start[0]) / (self.end[0] - self.start[0])))
 
         # Ensures values are within bounds
         i = min(i, self.height - 1)
