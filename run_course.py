@@ -37,6 +37,7 @@ def run_course(rover, end_point, include_diagonals=True, euclidean=True):
             path = quickest_path(current_node, end_node, grid, include_diagonals=include_diagonals, euclidean=euclidean)
 
         next_node = path.pop(0)
-        next_location = grid.location(next_node.row, next_node.column)        
+        row, column = next_node.coords
+        next_location = grid.location(row, column)        
         move_rover(rover, next_location[0], next_location[1])
 
