@@ -33,7 +33,7 @@ def run_course(rover, end_point, include_diagonals=True, euclidean=True):
         
         if recalculate_route:
             # might want to create an entirely new grid based on the current rover's position
-            current_node = (rover.x, rover.y)
+            current_node = grid.nearest_node((rover.x, rover.y))
             path = quickest_path(current_node, end_node, grid, include_diagonals=include_diagonals, euclidean=euclidean)
 
         next_node = path.pop(0)
