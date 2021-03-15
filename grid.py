@@ -68,8 +68,6 @@ class Grid:
         j = min(j, self.width - 1)
         j = max(j, 0)
         
-        print(i, j)
-
         return self[i][j]
     
     def location(self, row, column):
@@ -77,11 +75,3 @@ class Grid:
         x = self.start[0] + float(column) / self.width * (self.end[0] - self.start[0])
         y = self.start[1] + float(row) / self.height * (self.end[1] - self.start[1])
         return (x, y)
-
-grid = Grid((-0, 0), (0, 0))
-print(grid._array)
-print(grid.nearest_node((10, 0)).coords)
-
-from pathfinding import quickest_path
-
-print(quickest_path(grid[(0, 0)], grid[(0, 0)], grid))
