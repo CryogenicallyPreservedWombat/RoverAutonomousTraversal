@@ -42,8 +42,8 @@ def run_course(rover, end_point, include_diagonals=True, euclidean=True, verbose
         row, column = next_node.coords
         next_location = grid.location(row, column)
         if verbose:
-            print("Moving to location {loc}".format(next_location))      
+            print("Moving to location {}".format(next_location))      
         move_rover(rover, next_location[0], next_location[1])
         if verbose:
-            print("Move completed, currently predicting {num} more waypoints".format(len(path)))
+            print("Move completed, currently predicting {} more waypoints".format(len(path)))
 
