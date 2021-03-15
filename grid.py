@@ -7,7 +7,7 @@ class Grid:
     A class that provides a discrete representation of 2D space to facilitate pathfinding in a continuous environment.
     """
 
-    def __init__(self, start, end, side_length=1):
+    def __init__(self, start, end, side_length=1.0):
         """
         Initializes a new Grid instance.
 
@@ -25,14 +25,18 @@ class Grid:
         self.end = end
 
         pre_array = []
-        num_x_boxes = int(ceil(abs((end[0] - start[0]) / side_length)))
-        num_y_boxes = int(ceil(abs((end[1] - start[1]) / side_length)))
+        num_x_boxes = int(ceil(abs(float(end[0] - start[0]) / side_length)))
+        num_y_boxes = int(ceil(abs(float(end[1] - start[1]) / side_length)))
 
-        for i in range(num_x_boxes):
-            for j in range(num_y_boxes):
+        # Ensures the array is not empty
+        num_x_boxes = max(num_x_boxes, 1)
+        num_y_boxes = max(num_y_boxes, 1)
+
+        for i in range(num_y_boxes):
+            for j in range(num_x_boxes):
                 pre_array.append(GridNode(i, j))
         
-        self._array = np.array(pre_array).reshape((num_x_boxes, num_y_boxes))
+        self._array = np.array(pre_array).reshape((num_y_boxes, num_x_boxes))
         self.width = num_x_boxes
         self.height = num_y_boxes
 
@@ -51,8 +55,11 @@ class Grid:
     def nearest_node(self, point):
         # Unnecessary float casts are for backwards compatibility to Python 2.7
         # Finds the element of the Grid that is nearest to a specified point
-        i = int(round(self.height * float(point[1] - self.start[1]) / (self.end[1] - self.start[1])))
-        j = int(round(self.width * float(point[0] - self.start[0]) / (self.end[0] - self.start[0])))
+        y_distance = float(self.end[1] - self.start[1])
+        x_distance = float(self.end[0] - self.start[0])
+
+        i = int(round(self.height * (point[1] - self.start[1]) / y_distance)) if y_distance != 0 else 0
+        j = int(round(self.width * (point[0] - self.start[0]) / x_distance)) if x_distance != 0 else 0
 
         # Ensures values are within bounds
         i = min(i, self.height - 1)
@@ -61,6 +68,8 @@ class Grid:
         j = min(j, self.width - 1)
         j = max(j, 0)
         
+        print(i, j)
+
         return self[i][j]
     
     def location(self, row, column):
@@ -68,3 +77,11 @@ class Grid:
         x = self.start[0] + float(column) / self.width * (self.end[0] - self.start[0])
         y = self.start[1] + float(row) / self.height * (self.end[1] - self.start[1])
         return (x, y)
+
+grid = Grid((-0, 0), (0, 0))
+print(grid._array)
+print(grid.nearest_node((10, 0)).coords)
+
+from pathfinding import quickest_path
+
+print(quickest_path(grid[(0, 0)], grid[(0, 0)], grid))
