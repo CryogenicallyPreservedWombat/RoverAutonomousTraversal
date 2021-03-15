@@ -4,12 +4,8 @@ from locate_obstacles import locate_obstacles
 from grid_node import distance
 from grid import Grid
 
-def run_course(rover, end_point, include_diagonals=True, euclidean=True, verbose=False):
+def run_course(rover, end_point, side_length=1, include_diagonals=True, euclidean=True, verbose=False):
     
-    # parameters should be fine-tuned
-    side_length = 1
-
-    # parameters shouldn't have to be fine-tuned
     recalculate_route = False
     start_point = (rover.x, rover.y)
 
@@ -37,6 +33,7 @@ def run_course(rover, end_point, include_diagonals=True, euclidean=True, verbose
             # might want to create an entirely new grid based on the current rover's position
             current_node = grid.nearest_node((rover.x, rover.y))
             path = quickest_path(current_node, end_node, grid, include_diagonals=include_diagonals, euclidean=euclidean)
+            recalculate_route = False
 
         next_node = path.pop(0)
         row, column = next_node.coords
