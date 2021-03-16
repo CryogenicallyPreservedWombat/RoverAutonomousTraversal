@@ -24,7 +24,6 @@ def quickest_path(node1, node2, grid, include_diagonals=True, euclidean=True):
 
             # Don't consider obstacles among valid routes
             if node.is_obstacle:
-                node.value = -1
                 continue
 
             g_value = start_dist[current_node] + 1
