@@ -34,6 +34,9 @@ def run_course(rover, end_point, side_length=1, include_diagonals=True, euclidea
             current_node = grid.nearest_node((rover.x, rover.y))
             path = quickest_path(current_node, end_node, grid, include_diagonals=include_diagonals, euclidean=euclidean)
             recalculate_route = False
+            if verbose:
+                print(grid)
+                print(path)
 
         next_node = path.pop(0)
         row, column = next_node.coords
