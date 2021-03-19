@@ -17,8 +17,8 @@ def quickest_path(node1, node2, grid, include_diagonals=True, euclidean=True, ve
 
         current_node = open_set.pop(index)
         if verbose:
-            print("Currently expanding node at: ", current_node.coords)
-            print("Potential nodes to check: ", len(open_set))
+            print("Currently expanding node at: " + str(current_node.coords))
+            print("Potential nodes to check: " + str(len(open_set)))
 
         if current_node is node2:
             print("Found the destination")
@@ -49,7 +49,12 @@ def quickest_path(node1, node2, grid, include_diagonals=True, euclidean=True, ve
     node = node2
     path = []
 
+    if verbose:
+        print("Reconstructing path")
+
     while len(node.parents) > 0:
+        if verbose:
+            print(str(node.coords) + " is on the path!")
         path.append(node)
         node.on_path = True
         node = node.parents[0]
