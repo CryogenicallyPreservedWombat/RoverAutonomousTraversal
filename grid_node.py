@@ -1,16 +1,18 @@
 import numpy as np
 
 class GridNode:
-    def __init__(self, row, column, is_obstacle=False, on_path=False):
+    def __init__(self, row, column, is_obstacle=False, on_path=False, is_rover = False):
         self.coords = (row, column)
         self.is_obstacle = is_obstacle
         self.on_path = on_path
+        self.is_rover = is_rover
         self.children = []
         self.parents = []
 
     def __repr__(self):
         char = "x" if self.is_obstacle else "o"
-        return "p" if self.on_path else char
+        char2 = "p" if self.on_path else char
+        return "r" if self.is_rover else char2
 
 def neighbouring_nodes(node, grid, include_diagonals=True):
 
