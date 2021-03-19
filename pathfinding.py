@@ -1,7 +1,7 @@
 from grid_node import distance, neighbouring_nodes
 import numpy as np
 
-def quickest_path(node1, node2, grid, include_diagonals=True, euclidean=True):
+def quickest_path(node1, node2, grid, include_diagonals=True, euclidean=True, verbose=False):
 
     open_set = [node1]
     closed_set = []
@@ -16,8 +16,12 @@ def quickest_path(node1, node2, grid, include_diagonals=True, euclidean=True):
         index = np.argmin(np.array(h_values))
 
         current_node = open_set.pop(index)
+        if verbose:
+            print("Currently expanding node at: ", current_node.coords)
+            print("Potential nodes to check: ", len(open_set))
 
         if current_node is node2:
+            print("Found the destination")
             break 
 
         for node in neighbouring_nodes(current_node, grid, include_diagonals=include_diagonals):
@@ -47,6 +51,7 @@ def quickest_path(node1, node2, grid, include_diagonals=True, euclidean=True):
 
     while len(node.parents) > 0:
         path.append(node)
+        node.on_path = True
         node = node.parents[0]
     
     assert node is node1, "Viable path was not found"
