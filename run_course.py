@@ -48,8 +48,3 @@ def run_course(rover, end_point, side_length=1, include_diagonals=True, euclidea
         if verbose:
             print("Move completed, currently predicting {} more waypoints".format(len(path)))
 
-
-grid = Grid((0, 0), (10, 10))
-current_node = grid[(1, 1)]
-current_node.is_rover = True
-print(grid)

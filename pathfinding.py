@@ -6,7 +6,7 @@ def quickest_path(node1, node2, grid, include_diagonals=True, euclidean=True, ve
     for node_array in grid._array:
         for node in node_array:
             node.parents = []
-            node.is_obstacle, node.on_path = False, False, False
+            node.is_obstacle, node.on_path = False, False
 
     open_set = [node1]
     closed_set = []
