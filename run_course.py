@@ -32,6 +32,7 @@ def run_course(rover, end_point, side_length=1, include_diagonals=True, euclidea
                 print("Found new obstacles, recalculating route")
             # might want to create an entirely new grid based on the current rover's position
             current_node = grid.nearest_node((rover.x, rover.y))
+            current_node.is_rover = True
             path = quickest_path(current_node, end_node, grid, include_diagonals=include_diagonals, euclidean=euclidean, verbose=verbose)
             recalculate_route = False
             if verbose:
