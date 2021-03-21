@@ -47,4 +47,3 @@ def run_course(rover, end_point, side_length=1, include_diagonals=True, euclidea
         move_rover(rover, next_location[0], next_location[1])
         if verbose:
             print("Move completed, currently predicting {} more waypoints".format(len(path)))
-
