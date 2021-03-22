@@ -58,5 +58,5 @@ def quickest_path(node1, node2, grid, include_diagonals=True, euclidean=True, ve
         node.on_path = True
         node = node.parents[0]
     
-    assert node is node1, "Viable path was not found"
+    assert node is node1, ("Viable path was not found\n" + repr(grid))
     return list(reversed(path))
