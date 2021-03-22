@@ -1,7 +1,7 @@
 from pathfinding import quickest_path
 from move_rover import move_rover
 from locate_obstacles import locate_obstacles
-from grid_node import distance
+from grid_node import distance, neighbouring_nodes
 from grid import Grid
 
 def run_course(rover, end_point, side_length=1, include_diagonals=True, euclidean=True, verbose=False):
@@ -25,6 +25,11 @@ def run_course(rover, end_point, side_length=1, include_diagonals=True, euclidea
         for obstacle in obstacles:
             if not grid.nearest_node(obstacle).is_obstacle:
                 grid.nearest_node(obstacle).is_obstacle = True
+                for node in neighbouring_nodes(obstacle, grid, include_diagonals=include_diagonals):
+                    # Includes all neighbouring nodes as obstacles
+                    # Does not count the rover as an obstacle if it is nearbys
+                    if node is not grid.nearest_node((rover.x, rover.y)):
+                        node.is_obstacle = True
                 recalculate_route = True
         
         if recalculate_route:
