@@ -52,7 +52,7 @@ def run_course(rover, end_point, side_length=1, include_diagonals=True, euclidea
         row, column = next_node.coords
         next_location = grid.location(row, column)
         if verbose:
-            print("Moving to location {} from {}".format((round(next_location[0], 2), round(next_location[1], 2)), (round(rover.x, 2), round(rover.y))))
+            print("Moving to location {} from {}".format((round(next_location[0], 2), round(next_location[1], 2)), (round(rover.x, 2), round(rover.y, 2))))
         move_rover(rover, next_location[0], next_location[1])
         if verbose:
             print("Move completed, currently predicting {} more waypoints".format(len(path)))
