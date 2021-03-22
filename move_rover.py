@@ -17,7 +17,7 @@ def move_rover(rover, x, y):
         rover.send_command(0, angle_to_travel - radians(rover.heading))
     rover.send_command(0, 0)
     
-    dist_tolerance = 1e-3
+    dist_tolerance = 5e-2
     # Move the rover to its destination
     while abs(rover.x - x) > dist_tolerance and abs(rover.y - y) > dist_tolerance:
         rover.send_command(1, 0)
