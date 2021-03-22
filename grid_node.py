@@ -10,7 +10,7 @@ class GridNode:
         self.parents = []
 
     def __repr__(self):
-        char = "x" if self.is_obstacle else "o"
+        char = "x" if self.is_obstacle else " "
         char2 = "p" if self.on_path else char
         return "r" if self.is_rover else char2
 
