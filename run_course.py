@@ -3,8 +3,9 @@ from move_rover import move_rover
 from locate_obstacles import locate_obstacles
 from grid_node import distance, neighbouring_nodes
 from grid import Grid
+from math import ceil
 
-def run_course(rover, end_point, side_length=1, include_diagonals=True, euclidean=True, verbose=False, sensors_to_ignore=[]):
+def run_course(rover, end_point, side_length=1, include_diagonals=True, euclidean=True, verbose=False, sensors_to_ignore=[7], obstacle_padding=0.5):
     
     recalculate_route = False
     start_point = (rover.x, rover.y)
@@ -30,12 +31,14 @@ def run_course(rover, end_point, side_length=1, include_diagonals=True, euclidea
                 grid.nearest_node(obstacle).is_obstacle = True
                 recalculate_route = True
 
-                for node in neighbouring_nodes(obstacle_node, grid, include_diagonals=include_diagonals):
-                    # Includes all neighbouring nodes as obstacles
-                    # Does not count the rover as an obstacle if it is nearbys
+                # Calculates the appropriate amount of padding to give each obstacle
+                padding_layers = int(ceil(float(obstacle_padding) / grid.side_length))
+
+                for node in neighbouring_nodes(obstacle_node, grid, include_diagonals=include_diagonals, radius=padding_layers):
                     if node is not grid.nearest_node((rover.x, rover.y)):
                         node.is_obstacle = True
-        
+
+
         if recalculate_route:
             if verbose:
                 print("Found new obstacles, recalculating route")

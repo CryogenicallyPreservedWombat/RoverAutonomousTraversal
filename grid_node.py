@@ -14,7 +14,7 @@ class GridNode:
         char2 = "p" if self.on_path else char
         return "r" if self.is_rover else char2
 
-def neighbouring_nodes(node, grid, include_diagonals=True):
+def neighbouring_nodes(node, grid, include_diagonals=True, radius=1):
 
     node_list = []
     i, j = node.coords
@@ -22,8 +22,8 @@ def neighbouring_nodes(node, grid, include_diagonals=True):
     # n x n
     # n n n
     if include_diagonals:
-        for i_offset in range(-1, 2):
-            for j_offset in range(-1, 2):
+        for i_offset in range(-radius, radius + 1):
+            for j_offset in range(-radius, radius + 1):
                 # Ensure the node does not count itself among its neighbours
                 if i_offset == 0 and j_offset == 0: continue
                 # Ensure the new node is within the bounds of the grid
@@ -33,10 +33,10 @@ def neighbouring_nodes(node, grid, include_diagonals=True):
     # n x n
     #   n
     else:
-        for i_offset in (-1, 1):
+        for i_offset in [dist for dist in range(-radius, radius + 1) if dist != 0]:
             if i + i_offset in range(grid.height):
                 node_list.append(grid[i + i_offset][j])
-        for j_offset in (-1, 1):
+        for j_offset in [dist for dist in range(-radius, radius + 1) if dist != 0]:
             if j + j_offset in range(grid.width):
                 node_list.append(grid[i][j + j_offset])
     

@@ -39,6 +39,7 @@ class Grid:
         self._array = np.array(pre_array).reshape((num_y_boxes, num_x_boxes))
         self.width = num_x_boxes
         self.height = num_y_boxes
+        self.side_length = side_length
 
     def __getitem__(self, indices):
         # Allows a value to be read from an instace of Grid through a subscript
