@@ -4,7 +4,7 @@ from locate_obstacles import locate_obstacles
 from grid_node import distance, neighbouring_nodes
 from grid import Grid
 
-def run_course(rover, end_point, side_length=1, include_diagonals=True, euclidean=True, verbose=False):
+def run_course(rover, end_point, side_length=1, include_diagonals=True, euclidean=True, verbose=False, sensors_to_ignore=[]):
     
     recalculate_route = False
     start_point = (rover.x, rover.y)
@@ -20,7 +20,7 @@ def run_course(rover, end_point, side_length=1, include_diagonals=True, euclidea
 
     while len(path) != 0:
 
-        obstacles = locate_obstacles(rover)
+        obstacles = locate_obstacles(rover, sensors_to_ignore=sensors_to_ignore)
 
         for obstacle in obstacles:
             obstacle_node = grid.nearest_node(obstacle)

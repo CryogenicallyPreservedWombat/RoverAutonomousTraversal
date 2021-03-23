@@ -1,13 +1,12 @@
 from math import isinf, pi, sin, cos, radians
 
-def locate_obstacles(rover, sweep_angle=pi/2, verbose=False):
+def locate_obstacles(rover, sweep_angle=pi/2, sensors_to_ignore=[]):
     """
     Identifies obstacles and calculates their location in (x, y) form
 
     Parameters
     - rover: the Gazebo rover
     - sweep_angle: the angle through which the LiDAR beams are emitted
-    - verbose: a boolean specifying whether or not to print debugging information
 
     Returns a list of (x, y) tuples
     """
@@ -15,6 +14,9 @@ def locate_obstacles(rover, sweep_angle=pi/2, verbose=False):
     obstacles = []
 
     for i in range(num_lidar_sensors):
+
+        if i in sensors_to_ignore:
+            continue
 
         distance = rover.laser_distances[i]
 
@@ -26,12 +28,6 @@ def locate_obstacles(rover, sweep_angle=pi/2, verbose=False):
 
             obstacle_x = rover.x + distance * cos(obstacle_heading)
             obstacle_y = rover.y + distance * sin(obstacle_heading)
-
-            if verbose:
-                print("\nLiDAR beam (counting from 1): {}".format(i + 1))
-                print("LiDAR angle: {}".format(lidar_angle))
-                print("Obstacle heading: {}".format(obstacle_heading))
-                print("Distance: {}\n".format(distance))
 
             obstacles.append((obstacle_x, obstacle_y))
 
