@@ -47,9 +47,10 @@ def run_course(rover, end_point, side_length=1, include_diagonals=True, euclidea
             current_node.is_rover = True
             path = quickest_path(current_node, end_node, grid, include_diagonals=include_diagonals, euclidean=euclidean, verbose=verbose)
             recalculate_route = False
-            if verbose:
-                print(grid)
-                current_node.is_rover = False
+        
+        if verbose:
+            print(grid)
+            current_node.is_rover = False
 
         next_node = path.pop(0)
         row, column = next_node.coords
