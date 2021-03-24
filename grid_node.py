@@ -1,16 +1,17 @@
 import numpy as np
 
 class GridNode:
-    def __init__(self, row, column, is_obstacle=False, on_path=False, is_rover = False):
+    def __init__(self, row, column, is_obstacle=False, is_padding=False, on_path=False, is_rover = False):
         self.coords = (row, column)
         self.is_obstacle = is_obstacle
+        self.is_padding = is_padding
         self.on_path = on_path
         self.is_rover = is_rover
         self.children = []
         self.parents = []
 
     def __repr__(self):
-        char = "x" if self.is_obstacle else " "
+        char = "x" if (self.is_obstacle or self.is_padding) else " "
         char2 = "p" if self.on_path else char
         return "r" if self.is_rover else char2
 

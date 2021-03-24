@@ -30,7 +30,7 @@ def quickest_path(node1, node2, grid, include_diagonals=True, euclidean=True, ve
         for node in neighbouring_nodes(current_node, grid, include_diagonals=include_diagonals):
 
             # Don't consider obstacles among valid routes
-            if node.is_obstacle:
+            if node.is_obstacle or node.is_padding:
                 continue
 
             g_value = start_dist[current_node] + 1

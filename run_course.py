@@ -28,7 +28,7 @@ def run_course(rover, end_point, side_length=1, include_diagonals=True, euclidea
 
             if not obstacle_node.is_obstacle:
 
-                grid.nearest_node(obstacle).is_obstacle = True
+                obstacle_node.is_obstacle = True
                 recalculate_route = True
 
                 # Calculates the appropriate amount of padding to give each obstacle
@@ -36,7 +36,7 @@ def run_course(rover, end_point, side_length=1, include_diagonals=True, euclidea
 
                 for node in neighbouring_nodes(obstacle_node, grid, include_diagonals=include_diagonals, radius=padding_layers):
                     if node is not grid.nearest_node((rover.x, rover.y)):
-                        node.is_obstacle = True
+                        node.is_padding = True
 
 
         if recalculate_route:
