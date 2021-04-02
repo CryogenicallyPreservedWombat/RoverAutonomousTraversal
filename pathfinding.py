@@ -2,6 +2,27 @@ from grid_node import distance, neighbouring_nodes
 import numpy as np
 
 def quickest_path(node1, node2, grid, include_diagonals=True, euclidean=True, verbose=False):
+    """Finds the shortest path between two nodes on a grid, avoiding obstacles
+
+    Parameters
+    ----------
+    node1 : GridNode
+        The node that represents the beginning of the path
+    node2 : GridNode
+        The node that represents the desired destination
+    grid : Grid
+        A grid that contains `node1`, `node2`, and a representation of the rover's environment
+
+    Returns
+    -------
+    list
+        A list of nodes that forms the optimal path
+        
+    Rasies
+    -----
+    AssertionError
+        If no viable path is found
+    """
 
     for node_array in grid._array:
         for node in node_array:
@@ -33,7 +54,7 @@ def quickest_path(node1, node2, grid, include_diagonals=True, euclidean=True, ve
             if node.is_obstacle or node.is_padding:
                 continue
 
-            g_value = start_dist[current_node] + 1
+            g_value = start_dist[current_node] + grid.side_length
             if node in open_set:
                 if start_dist[node] <= g_value:
                     continue
