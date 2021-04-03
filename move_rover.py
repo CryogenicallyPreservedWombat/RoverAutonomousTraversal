@@ -18,7 +18,6 @@ def move_rover(rover, x, y):
     rover.send_command(0, 0)
     
     distance_to_travel = sqrt((x - rover.x) ** 2 + (y - rover.y) ** 2)
-    speed_factor = 2
     dist_tolerance = 1e-1
 
     while abs(distance_to_travel) > dist_tolerance:
@@ -27,7 +26,6 @@ def move_rover(rover, x, y):
         if distance_remaining > distance_to_travel:
             break
         distance_to_travel = distance_remaining
-        # Speed is proportional to gow much distance there is still to travel
-        rover.send_command(speed_factor * distance_to_travel, 0)
+        rover.send_command(1, 0)
     
     rover.send_command(0, 0)
