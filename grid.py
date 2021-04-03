@@ -57,8 +57,8 @@ class Grid:
             for j in range(self.width):
                 node = self[i][j]
                 # Ensures there are no trailing spaces or newlines
-                string += repr(node) + ("" if j == self.width - 1 else " ")
-            string += ("" if i == self.height - 1 else "\n")
+                string += repr(node) + ("]" if j == self.width - 1 else " ")
+            string += ("" if i == self.height - 1 else "\n[")
         
         return string
     
