@@ -51,7 +51,16 @@ class Grid:
     
     def __repr__(self):
         # Provides a string representation of an instance of Grid
-        return str(self._array)
+        string = ""
+
+        for i in range(self.height):
+            for j in range(self.width):
+                node = self[i][j]
+                # Ensures there are no trailing spaces or newlines
+                string += repr(node) + ("" if j == self.width - 1 else " ")
+            string += ("" if i == self.height - 1 else "\n")
+        
+        return string
     
     def nearest_node(self, point):
         # Unnecessary float casts are for backwards compatibility to Python 2.7
