@@ -31,6 +31,6 @@ def move_rover(rover, x, y):
         # Having speed be proportional to distance remaining seems to work for smaller distances
         # For larger distances it tends to overshoot drastically, which is why speed is capped at 1
         speed = speed_factor * distance_to_travel if distance_to_travel < 1 else 1
-        rover.send_command(speed_factor * distance_to_travel, 0)   
+        rover.send_command(speed, 0)   
 
     rover.send_command(0, 0)
