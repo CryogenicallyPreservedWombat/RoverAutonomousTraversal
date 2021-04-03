@@ -22,11 +22,7 @@ def move_rover(rover, x, y):
     dist_tolerance = 1e-1
 
     while abs(distance_to_travel) > dist_tolerance:
-        distance_remaining = sqrt((x - rover.x) ** 2 + (y - rover.y) ** 2)
-        # Occurs if rover is getting further from its destination
-        if distance_remaining > distance_to_travel:
-            break
-        distance_to_travel = distance_remaining
+        distance_to_travel = sqrt((x - rover.x) ** 2 + (y - rover.y) ** 2)
         
         # Having speed be proportional to distance remaining seems to work for smaller distances
         # For larger distances it tends to overshoot drastically, which is why speed is capped at 1
