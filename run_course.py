@@ -50,6 +50,7 @@ def run_course(rover, end_point, side_length=1, include_diagonals=True, euclidea
         if verbose:
             rover_node = grid.nearest_node((rover.x, rover.y))
             rover_node.is_rover = True
+            rover_node.on_path = False
             print(grid)
             rover_node.is_rover = False
 

@@ -51,7 +51,7 @@ class Grid:
     
     def __repr__(self):
         # Provides a string representation of an instance of Grid
-        string = ""
+        string = "["
 
         for i in range(self.height):
             for j in range(self.width):
