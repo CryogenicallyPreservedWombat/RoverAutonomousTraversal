@@ -16,7 +16,7 @@ class GridNode:
         elif self.is_obstacle:
             return "x"
         elif self.is_padding:
-            return "o"
+            return "-"
         elif self.on_path:
             return "p"
         else:
