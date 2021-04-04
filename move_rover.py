@@ -10,7 +10,7 @@ def move_rover(rover, x, y):
     - y: the desired y coordinate
     """
     angle_to_travel = atan2(y - rover.y, x - rover.x)
-    angle_tolerance = 1e-2
+    angle_tolerance = 1e-1
     # Turn the rover to face the desired direction
     while abs(radians(rover.heading) - angle_to_travel) > angle_tolerance:
         # Speed is proportional to how much angular distance there is still to travel
