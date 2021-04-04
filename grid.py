@@ -86,5 +86,17 @@ class Grid:
         y = self.start[1] + float(row) / self.height * (self.end[1] - self.start[1])
         return (x, y)
     
-    def oversized_grid(self, start, end, node_spacing=1.0, buffer_distance=)
+    @staticmethod
+    def oversized_grid(start, end, node_spacing=1.0, buffer_distance=5.0):
+
+        if buffer_distance < 0:
+            return Grid.oversized_grid(start, end, node_spacing=node_spacing, buffer_distance=-buffer_distance)
+
+        x_sign = 1 if end[0] >= start[0] else -1
+        y_sign = 1 if end[1] >= start[1] else -1
+
+        new_start = (start[0] - buffer_distance * x_sign, start[1] - buffer_distance * y_sign)
+        new_end = (end[0] + buffer_distance * x_sign, end[1] + buffer_distance * y_sign)
+
+        return Grid(new_start, new_end, node_spacing=node_spacing)
 

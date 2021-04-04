@@ -12,7 +12,7 @@ def run_course(rover, end_point, node_spacing=1, include_diagonals=True, euclide
 
     # Might want to facilitate the initialization of a grid that fills
     # a larger area than is defined between the start and end points, just in case
-    grid = Grid(start_point, end_point, node_spacing=node_spacing)
+    grid = Grid.oversized_grid(start_point, end_point, node_spacing=node_spacing)
 
     start_node = grid.nearest_node(start_point)
     end_node = grid.nearest_node(end_point)
