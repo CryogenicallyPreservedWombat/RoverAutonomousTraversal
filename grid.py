@@ -7,7 +7,7 @@ class Grid:
     A class that provides a discrete representation of 2D space to facilitate pathfinding in a continuous environment.
     """
 
-    def __init__(self, start, end, side_length=1.0):
+    def __init__(self, start, end, node_spacing=1.0):
         """
         Initializes a new Grid instance.
 
@@ -17,7 +17,7 @@ class Grid:
             a point that defines the origin of the grid
         end : (float, float)
             a point that defines the corner of the grid opposite `start`
-        side_length : float
+        node_spacing : float
             the length of each grid square in meters
         """
         
@@ -25,8 +25,8 @@ class Grid:
         self.end = end
 
         pre_array = []
-        num_x_boxes = int(ceil(abs(float(end[0] - start[0]) / side_length)))
-        num_y_boxes = int(ceil(abs(float(end[1] - start[1]) / side_length)))
+        num_x_boxes = int(ceil(abs(float(end[0] - start[0]) / node_spacing)))
+        num_y_boxes = int(ceil(abs(float(end[1] - start[1]) / node_spacing)))
 
         # Ensures the array is not empty
         num_x_boxes = max(num_x_boxes, 1)
@@ -39,7 +39,7 @@ class Grid:
         self._array = np.array(pre_array).reshape((num_y_boxes, num_x_boxes))
         self.width = num_x_boxes
         self.height = num_y_boxes
-        self.side_length = side_length
+        self.node_spacing = node_spacing
 
     def __getitem__(self, indices):
         # Allows a value to be read from an instace of Grid through a subscript
@@ -85,3 +85,6 @@ class Grid:
         x = self.start[0] + float(column) / self.width * (self.end[0] - self.start[0])
         y = self.start[1] + float(row) / self.height * (self.end[1] - self.start[1])
         return (x, y)
+    
+    def oversized_grid(self, start, end, node_spacing=1.0, buffer_distance=)
+

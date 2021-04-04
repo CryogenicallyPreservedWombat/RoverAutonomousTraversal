@@ -5,14 +5,14 @@ from grid_node import distance, neighbouring_nodes
 from grid import Grid
 from math import ceil
 
-def run_course(rover, end_point, side_length=1, include_diagonals=True, euclidean=True, verbose=False, sensors_to_ignore=[7], obstacle_padding=0.5):
+def run_course(rover, end_point, node_spacing=1, include_diagonals=True, euclidean=True, verbose=False, sensors_to_ignore=[7], obstacle_padding=0.5):
     
     recalculate_route = False
     start_point = (rover.x, rover.y)
 
     # Might want to facilitate the initialization of a grid that fills
     # a larger area than is defined between the start and end points, just in case
-    grid = Grid(start_point, end_point, side_length=side_length)
+    grid = Grid(start_point, end_point, node_spacing=node_spacing)
 
     start_node = grid.nearest_node(start_point)
     end_node = grid.nearest_node(end_point)
@@ -32,7 +32,7 @@ def run_course(rover, end_point, side_length=1, include_diagonals=True, euclidea
                 recalculate_route = True
 
                 # Calculates the appropriate amount of padding to give each obstacle
-                padding_layers = int(ceil(float(obstacle_padding) / grid.side_length))
+                padding_layers = int(ceil(float(obstacle_padding) / grid.node_spacing))
 
                 for node in neighbouring_nodes(obstacle_node, grid, include_diagonals=include_diagonals, radius=padding_layers):
                     if node is not grid.nearest_node((rover.x, rover.y)):
@@ -48,11 +48,11 @@ def run_course(rover, end_point, side_length=1, include_diagonals=True, euclidea
             recalculate_route = False
         
         if verbose:
-            rover_node = grid.nearest_node((rover.x, rover.y))
-            rover_node.is_rover = True
-            rover_node.on_path = False
+            for row in grid._array:
+                for node in row:
+                    node.is_rover = grid.nearest_node((rover.x, rover.y)) is node
+                    node.on_path = node in path
             print(grid)
-            rover_node.is_rover = False
 
         next_node = path.pop(0)
         row, column = next_node.coords

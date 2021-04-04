@@ -27,7 +27,6 @@ def quickest_path(node1, node2, grid, include_diagonals=True, euclidean=True, ve
     for node_array in grid._array:
         for node in node_array:
             node.parents = []
-            node.on_path = False
 
     open_set = [node1]
     closed_set = []
@@ -54,7 +53,7 @@ def quickest_path(node1, node2, grid, include_diagonals=True, euclidean=True, ve
             if node.is_obstacle or node.is_padding:
                 continue
 
-            g_value = start_dist[current_node] + grid.side_length
+            g_value = start_dist[current_node] + grid.node_spacing
             if node in open_set:
                 if start_dist[node] <= g_value:
                     continue
@@ -76,7 +75,6 @@ def quickest_path(node1, node2, grid, include_diagonals=True, euclidean=True, ve
 
     while len(node.parents) > 0:
         path.append(node)
-        node.on_path = True
         node = node.parents[0]
     
     assert node is node1, ("Viable path was not found\n" + repr(grid))
