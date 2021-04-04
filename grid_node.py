@@ -11,9 +11,16 @@ class GridNode:
         self.parents = []
 
     def __repr__(self):
-        char = "x" if (self.is_obstacle or self.is_padding) else " "
-        char2 = "p" if self.on_path else char
-        return "r" if self.is_rover else char2
+        if self.is_rover:
+            return "r"
+        elif self.is_obstacle:
+            return "x"
+        elif self.is_padding:
+            return "o"
+        elif self.on_path:
+            return "p"
+        else:
+            return " "
 
 def neighbouring_nodes(node, grid, include_diagonals=True, radius=1):
 
