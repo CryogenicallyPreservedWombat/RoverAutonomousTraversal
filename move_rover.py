@@ -21,7 +21,7 @@ def move_rover(rover, x, y, grid):
         if untracked obstacles are found on the rover's path 
     """
     angle_to_travel = atan2(y - rover.y, x - rover.x)
-    angle_tolerance = 1e-1
+    angle_tolerance = 5e-2
     # Turn the rover to face the desired direction
     while abs(radians(rover.heading) - angle_to_travel) > angle_tolerance:
         # Speed is proportional to how much angular distance there is still to travel, with a minimum speed
