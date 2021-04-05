@@ -74,3 +74,5 @@ def run_course(rover, end_point, node_spacing=0.4, include_diagonals=True, eucli
 
         if verbose:
             print("Move completed, currently predicting {} more waypoints".format(len(stitched_path)))
+    
+    rover.send_command(0, 0)
