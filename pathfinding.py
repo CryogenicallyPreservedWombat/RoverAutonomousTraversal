@@ -96,3 +96,4 @@ def stitch_colinear_nodes(start_node, path):
             print("Changing direction now, at {}, recursing over: {}".format(path[i - 1].coords, path[i:]))
             return [path[i - 1]] + stitch_colinear_nodes(path[i - 1], path[i:])
         print("Stitching node at {} with node {}".format(path[i].coords, path[i - 1].coords))
+    return path[-1]
