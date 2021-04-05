@@ -83,13 +83,15 @@ def quickest_path(node1, node2, grid, include_diagonals=True, euclidean=True, ve
 def tuple_difference(tuple1, tuple2):
     return (tuple1[0] - tuple2[0], tuple1[1] - tuple2[1])
 
-def stitch_colinear_nodes(start_node, path):
+def stitch_colinear_nodes(start_node, path, maximum_stitch_size=10):
     if len(path) <= 1: 
         return path
     
     diff = tuple_difference(path[0].coords, start_node.coords)
+    counter = 0
     
     for i in range(1, len(path)):
-        if tuple_difference(path[i].coords, path[i - 1].coords) != diff:
+        counter += 1
+        if tuple_difference(path[i].coords, path[i - 1].coords) != diff or counter == 10:
             return [path[i - 1]] + stitch_colinear_nodes(path[i - 1], path[i:])
     return [path[-1]]
