@@ -85,7 +85,9 @@ def tuple_difference(tuple1, tuple2):
 
 def stitch_colinear_nodes(start_node, path):
     print("LENGTH: {}".format(len(path)))
-    if len(path) <= 1: return path
+    if len(path) <= 1: 
+        print("Returning path: {}".format(path))
+        return path
     
     diff = tuple_difference(path[0].coords, start_node.coords)
     
