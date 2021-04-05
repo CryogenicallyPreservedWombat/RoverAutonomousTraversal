@@ -1,5 +1,5 @@
 class NoValidPathError(Exception):
     pass
 
-class ObseleteGraphError(Exception):
+class ObseleteGridError(Exception):
     pass
