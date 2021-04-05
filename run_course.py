@@ -1,4 +1,4 @@
-from pathfinding import quickest_path
+from pathfinding import quickest_path, stitch_colinear_nodes
 from move_rover import move_rover
 from locate_obstacles import locate_obstacles
 from grid_node import distance, neighbouring_nodes
@@ -45,6 +45,7 @@ def run_course(rover, end_point, node_spacing=0.4, include_diagonals=True, eucli
             # might want to create an entirely new grid based on the current rover's position
             rover_node = grid.nearest_node((rover.x, rover.y))
             path = quickest_path(rover_node, end_node, grid, include_diagonals=include_diagonals, euclidean=euclidean, verbose=verbose)
+            path = stitch_colinear_nodes(rover_node, path)
             recalculate_route = False
         
         if verbose:
