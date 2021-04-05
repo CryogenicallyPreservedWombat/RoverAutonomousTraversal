@@ -84,16 +84,12 @@ def tuple_difference(tuple1, tuple2):
     return (tuple1[0] - tuple2[0], tuple1[1] - tuple2[1])
 
 def stitch_colinear_nodes(start_node, path):
-    print("LENGTH: {}".format(len(path)))
     if len(path) <= 1: 
-        print("Returning path: {}".format(path))
         return path
     
     diff = tuple_difference(path[0].coords, start_node.coords)
     
     for i in range(1, len(path)):
         if tuple_difference(path[i].coords, path[i - 1].coords) != diff:
-            print("Changing direction now, at {}, recursing over: {}".format(path[i - 1].coords, path[i:]))
             return [path[i - 1]] + stitch_colinear_nodes(path[i - 1], path[i:])
-        print("Stitching node at {} with node {}".format(path[i].coords, path[i - 1].coords))
     return [path[-1]]
