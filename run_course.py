@@ -56,7 +56,7 @@ def run_course(rover, end_point, node_spacing=0.4, include_diagonals=True, eucli
             except:
                 if verbose: print("ERROR: NO ROUTE FOUND.\nREDRAWING GRID")
                 for row in grid._array:
-                    for node in grid:
+                    for node in row:
                         node.is_padding = False
                         node.is_obstacle = False
                 continue
