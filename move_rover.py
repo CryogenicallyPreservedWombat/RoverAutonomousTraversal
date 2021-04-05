@@ -1,13 +1,24 @@
 from math import atan2, radians, sqrt
+from errors import ObseleteGridError
+from locate_obstacles import locate_obstacles
 
-def move_rover(rover, x, y):
+def move_rover(rover, x, y, grid):
     """
     Moves a rover from its current location to a specified destination
 
     Parameters
-    - rover: the Gazebo rover
-    - x: the desired x coordinate
-    - y: the desired y coordinate
+    ----------
+    rover : Rover
+        The rover within the Gazebo simulation
+    x: float
+        The x coordinate of the desired destination
+    - y: float
+        The y coordinate of the desired destination
+
+    Raises
+    ------
+    ObseleteGridError
+        if untracked obstacles are found on the rover's path 
     """
     angle_to_travel = atan2(y - rover.y, x - rover.x)
     angle_tolerance = 1e-2
@@ -15,8 +26,17 @@ def move_rover(rover, x, y):
     while abs(radians(rover.heading) - angle_to_travel) > angle_tolerance:
         # Speed is proportional to how much angular distance there is still to travel, with a minimum speed
         rover.send_command(0, max(angle_to_travel - radians(rover.heading), 0.1))
+
     rover.send_command(0, 0)
     
+    for obstacle_pos in locate_obstacles(rover):
+        obstacle_node = grid.nearest_node(obstacle_pos)
+        
+        if not (obstacle_node.is_obstacle or obstacle_node.is_padding):
+            raise ObseleteGridError
+
+
+    # Moves the rover forward
     distance_to_travel = sqrt((x - rover.x) ** 2 + (y - rover.y) ** 2)
     speed_factor = 2
     dist_tolerance = 1e-1
@@ -35,8 +55,8 @@ def move_rover(rover, x, y):
 
         distance_to_travel = distance_remaining
         
-        # Having speed be proportional to distance remaining seems to work for smaller distances
-        # For larger distances it tends to overshoot drastically, which is why speed is capped at 0.25
+        # Speed is capped at 0.25, as velocity proportional to position results in large overshoots over longer distances
+        # Theoretically, the diminishing speed as the rover nears its target is useful for smooth deceleration, but in practice it's unclear
         speed = min(speed_factor * distance_to_travel, 0.25)
         rover.send_command(speed, 0)   
 
