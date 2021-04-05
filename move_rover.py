@@ -30,7 +30,7 @@ def move_rover(rover, x, y, grid):
         for obstacle_pos in locate_obstacles(rover):
             obstacle_node = grid.nearest_node(obstacle_pos)
             
-            if not (obstacle_node.is_obstacle or obstacle_node.is_padding):
+            if not obstacle_node.is_obstacle:
                 raise ObseleteGridError
 
     rover.send_command(0, 0)
