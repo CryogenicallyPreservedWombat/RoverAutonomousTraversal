@@ -1,6 +1,6 @@
 from math import isinf, pi, sin, cos, radians
 
-def locate_obstacles(rover, sweep_angle=pi/2, sensors_to_ignore=[]):
+def locate_obstacles(rover, sweep_angle=pi/2, sensors_to_ignore=[7]):
     """
     Identifies obstacles and calculates their location in (x, y) form
 
