@@ -90,5 +90,6 @@ def stitch_colinear_nodes(start_node, path):
     
     for i in range(1, len(path)):
         if tuple_difference(path[i].coords, path[i - 1].coords) != diff:
+            print("Changing direction now, at {}, recursing over: {}".format(path[i - 1].coords, path[i:]))
             return [path[i - 1]] + stitch_colinear_nodes(path[i - 1], path[i:])
         print("Stitching node at {} with node {}".format(path[i].coords, path[i - 1].coords))
