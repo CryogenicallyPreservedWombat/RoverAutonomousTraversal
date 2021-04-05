@@ -25,7 +25,7 @@ def move_rover(rover, x, y, grid):
     # Turn the rover to face the desired direction
     while abs(radians(rover.heading) - angle_to_travel) > angle_tolerance:
         # Speed is proportional to how much angular distance there is still to travel, with a minimum speed
-        rover.send_command(0, max(angle_to_travel - radians(rover.heading), 0.1))
+        rover.send_command(0, angle_to_travel - radians(rover.heading))
 
     rover.send_command(0, 0)
     
