@@ -18,8 +18,9 @@ def run_course(rover, end_point, node_spacing=0.4, include_diagonals=True, eucli
     end_node = grid.nearest_node(end_point)
 
     path = quickest_path(start_node, end_node, grid, include_diagonals=include_diagonals, euclidean=euclidean)
+    stitched_path = stitch_colinear_nodes(start_node, path)
 
-    while len(path) != 0:
+    while len(stitched_path) != 0:
 
         obstacles = locate_obstacles(rover, sensors_to_ignore=sensors_to_ignore)
 
@@ -45,7 +46,7 @@ def run_course(rover, end_point, node_spacing=0.4, include_diagonals=True, eucli
             # might want to create an entirely new grid based on the current rover's position
             rover_node = grid.nearest_node((rover.x, rover.y))
             path = quickest_path(rover_node, end_node, grid, include_diagonals=include_diagonals, euclidean=euclidean, verbose=verbose)
-            path = stitch_colinear_nodes(rover_node, path)
+            stitched_path = stitch_colinear_nodes(rover_node, path)
             recalculate_route = False
         
         if verbose:
@@ -55,11 +56,11 @@ def run_course(rover, end_point, node_spacing=0.4, include_diagonals=True, eucli
                     node.on_path = node in path
             print(grid)
 
-        next_node = path.pop(0)
+        next_node = stitched_path.pop(0)
         row, column = next_node.coords
         next_location = grid.location(row, column)
         if verbose:
             print("Moving to location {} from {}".format((round(next_location[0], 2), round(next_location[1], 2)), (round(rover.x, 2), round(rover.y, 2))))
         move_rover(rover, next_location[0], next_location[1])
         if verbose:
-            print("Move completed, currently predicting {} more waypoints".format(len(path)))
+            print("Move completed, currently predicting {} more waypoints".format(len(stitched_path)))
