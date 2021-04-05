@@ -4,6 +4,7 @@ from locate_obstacles import locate_obstacles
 from grid_node import distance, neighbouring_nodes
 from grid import Grid
 from math import ceil
+from errors import ObseleteGridError, NoValidPathError
 
 def run_course(rover, end_point, node_spacing=0.4, include_diagonals=True, euclidean=True, verbose=False, sensors_to_ignore=[7], obstacle_padding=0.4, buffer_distance=5.0):
     
@@ -61,6 +62,12 @@ def run_course(rover, end_point, node_spacing=0.4, include_diagonals=True, eucli
         next_location = grid.location(row, column)
         if verbose:
             print("Moving to location {} from {}".format((round(next_location[0], 2), round(next_location[1], 2)), (round(rover.x, 2), round(rover.y, 2))))
-        move_rover(rover, next_location[0], next_location[1])
+
+        try:
+            move_rover(rover, next_location[0], next_location[1], grid)
+        except:
+            recalculate_route = True
+            continue
+
         if verbose:
             print("Move completed, currently predicting {} more waypoints".format(len(stitched_path)))
