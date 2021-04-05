@@ -23,9 +23,11 @@ def run_course(rover, end_point, node_spacing=0.4, include_diagonals=True, eucli
 
     path = quickest_path(start_node, end_node, grid, include_diagonals=include_diagonals, euclidean=euclidean)
     stitched_path = stitch_colinear_nodes(start_node, path, maximum_stitch_size=max_stich_length)
+    force_loop_run = False
 
-    while len(stitched_path) != 0:
+    while len(stitched_path) != 0 or force_loop_run:
 
+        force_loop_run = False
         obstacles = locate_obstacles(rover, sensors_to_ignore=sensors_to_ignore)
 
         for obstacle in obstacles:
@@ -78,7 +80,9 @@ def run_course(rover, end_point, node_spacing=0.4, include_diagonals=True, eucli
         try:
             move_rover(rover, next_location[0], next_location[1], grid)
         except:
+            if verbose: print("Encountered an obstacle while turning, recalculating route")
             recalculate_route = True
+            force_loop_run = True
             continue
 
         if verbose:
