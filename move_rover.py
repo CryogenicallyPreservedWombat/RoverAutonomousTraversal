@@ -26,15 +26,14 @@ def move_rover(rover, x, y, grid):
     while abs(radians(rover.heading) - angle_to_travel) > angle_tolerance:
         # Speed is proportional to how much angular distance there is still to travel, with a minimum speed
         rover.send_command(0, angle_to_travel - radians(rover.heading))
+        
+        for obstacle_pos in locate_obstacles(rover):
+            obstacle_node = grid.nearest_node(obstacle_pos)
+            
+            if not (obstacle_node.is_obstacle or obstacle_node.is_padding):
+                raise ObseleteGridError
 
     rover.send_command(0, 0)
-    
-    for obstacle_pos in locate_obstacles(rover):
-        obstacle_node = grid.nearest_node(obstacle_pos)
-        
-        if not (obstacle_node.is_obstacle or obstacle_node.is_padding):
-            raise ObseleteGridError
-
 
     # Moves the rover forward
     distance_to_travel = sqrt((x - rover.x) ** 2 + (y - rover.y) ** 2)
