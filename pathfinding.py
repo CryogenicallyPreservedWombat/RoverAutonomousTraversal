@@ -1,5 +1,6 @@
 from grid_node import distance, neighbouring_nodes
 import numpy as np
+from errors import NoValidPathError
 
 def quickest_path(node1, node2, grid, include_diagonals=True, euclidean=True, verbose=False):
     """Finds the shortest path between two nodes on a grid, avoiding obstacles
@@ -20,7 +21,7 @@ def quickest_path(node1, node2, grid, include_diagonals=True, euclidean=True, ve
         
     Rasies
     -----
-    AssertionError
+    NoValidPathError
         If no viable path is found
     """
 
@@ -77,7 +78,10 @@ def quickest_path(node1, node2, grid, include_diagonals=True, euclidean=True, ve
         path.append(node)
         node = node.parents[0]
     
-    assert node is node1, ("Viable path was not found\n" + repr(grid))
+    if node is not node1:
+        print("Viable path was not found\n" + repr(grid))
+        raise NoValidPathError
+    
     return list(reversed(path))
 
 def tuple_difference(tuple1, tuple2):

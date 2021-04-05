@@ -49,7 +49,16 @@ def run_course(rover, end_point, node_spacing=0.4, include_diagonals=True, eucli
                 print("Found new obstacles, recalculating route")
             # might want to create an entirely new grid based on the current rover's position
             rover_node = grid.nearest_node((rover.x, rover.y))
-            path = quickest_path(rover_node, end_node, grid, include_diagonals=include_diagonals, euclidean=euclidean, verbose=verbose)
+            try:
+                path = quickest_path(rover_node, end_node, grid, include_diagonals=include_diagonals, euclidean=euclidean, verbose=verbose)
+            except:
+                if verbose: print("ERROR: NO ROUTE FOUND.\nREDRAWING GRID")
+                for row in grid._array:
+                    for node in grid:
+                        node.is_padding = False
+                        node.is_obstacle = False
+                continue
+
             stitched_path = stitch_colinear_nodes(rover_node, path, maximum_stitch_size=max_stich_length)
             recalculate_route = False
         
