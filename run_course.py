@@ -7,22 +7,40 @@ from math import ceil
 from errors import ObseleteGridError, NoValidPathError
 
 def run_course(rover, end_point, node_spacing=0.4, include_diagonals=True, euclidean=True, verbose=False, sensors_to_ignore=[7], obstacle_padding=0.4, buffer_distance=5.0):
-    
+    """Navigates the rover from its current location to a specified endpoint
+
+    Parameters
+    ----------
+    rover : Rover
+        the rover to be navigated through the obstacles
+    end_point : tuple
+        the coordinates of the rover's intended destination
+    node_spacing : float
+        the distance between nodes on the grid. This affects the size and accuracy of the grid, both of which increase as the node_spacing increases
+    include_diagonals : bool
+        whether or not the rover should be able to move diagonally between nodes
+    euclidean : bool
+        whether or not euclidean distance should be used as the heuristic function when running A*. If not, Manhattan distance is used
+    verbose : bool
+        whether or not to include verbose logging during the running of the function
+    sensors_to_ignore : list of ints
+        indices of LiDAR sensors to be ignored by the rover. This is set to [7] by default, as the Gazebo simulation of the QSET picks up erroneous readings from that specific sensor
+    obstacle_padding : float
+        the amount of distance from each obstacle the rover should maintain. The higher this value, the higher the likelihood of the rover seeing no valid paths
+    buffer_distance : float
+        the amount of distance in each direction by which the grid should be extended beyond what is necessary to fit both the rover and its destination
+    """
     recalculate_route = False
     start_point = (rover.x, rover.y)
 
-    # Ensures the stitched paths don't extend beyond LiDAR range (this is likely an underestimate--should be able to be as high as 15.0 / node_spacing)
-    max_stich_length = 10.0 / node_spacing
-
-    # Might want to facilitate the initialization of a grid that fills
-    # a larger area than is defined between the start and end points, just in case
+    # Grid is oversized in case obstacles force the rover's path away from a straight line
     grid = Grid.oversized_grid(start_point, end_point, node_spacing=node_spacing, buffer_distance=buffer_distance)
 
     start_node = grid.nearest_node(start_point)
     end_node = grid.nearest_node(end_point)
 
     path = quickest_path(start_node, end_node, grid, include_diagonals=include_diagonals, euclidean=euclidean)
-    stitched_path = stitch_colinear_nodes(start_node, path, maximum_stitch_size=max_stich_length)
+    stitched_path = stitch_colinear_nodes(start_node, path)
     force_loop_run = False
 
     while len(stitched_path) != 0 or force_loop_run:
@@ -61,7 +79,7 @@ def run_course(rover, end_point, node_spacing=0.4, include_diagonals=True, eucli
                         node.is_obstacle = False
                 continue
 
-            stitched_path = stitch_colinear_nodes(rover_node, path, maximum_stitch_size=max_stich_length)
+            stitched_path = stitch_colinear_nodes(rover_node, path)
             recalculate_route = False
         
         if verbose:

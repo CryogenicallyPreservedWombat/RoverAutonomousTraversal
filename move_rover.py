@@ -3,16 +3,15 @@ from errors import ObseleteGridError
 from locate_obstacles import locate_obstacles
 
 def move_rover(rover, x, y, grid):
-    """
-    Moves a rover from its current location to a specified destination
+    """Moves a rover from its current location to a specified destination
 
     Parameters
     ----------
     rover : Rover
         The rover within the Gazebo simulation
-    x: float
+    x : float
         The x coordinate of the desired destination
-    - y: float
+    y : float
         The y coordinate of the desired destination
 
     Raises
