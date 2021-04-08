@@ -130,7 +130,6 @@ def stitch_colinear_nodes(start_node, path):
     diff = _tuple_difference(path[0].coords, start_node.coords)
     
     for i in range(1, len(path)):
-        counter += 1
         if _tuple_difference(path[i].coords, path[i - 1].coords) != diff:
             return [path[i - 1]] + stitch_colinear_nodes(path[i - 1], path[i:])
     return [path[-1]]
